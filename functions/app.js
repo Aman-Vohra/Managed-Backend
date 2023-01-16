@@ -8,14 +8,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const serverless = require("serverless-http");
 const router = express.Router();
+var dotenv = require('dotenv');
 
-const JWT_SECRET =
-  "hvdvay289()aifegfyiyg8t87qt7fsrgwyrgweyugefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
+dotenv.config();
 
-const mongoUrl = "mongodb+srv://Aman:ManagedDB@cluster0.xsp7oif.mongodb.net/?retryWrites=true&w=majority"
+var url = process.env.MONGOLAB_URI;
+
+var jwt_token = process.env.JWT_SECRET;
 
 
-mongoose.connect(mongoUrl, {
+
+mongoose.connect(url, {
     useNewUrlParser: true,
 })
 .then(() => {
@@ -61,7 +64,7 @@ router.post("/login-user", async (req, res) => {
       return res.json({ error: "User Not found" });
     }
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ email: user.email }, JWT_SECRET
+      const token = jwt.sign({ email: user.email }, jwt_token
       , {expiresIn: 10,}
       );
       
@@ -77,7 +80,7 @@ router.post("/login-user", async (req, res) => {
   router.post("/userData", async (req, res) => {
     const { token } = req.body;
     try {
-      const user = jwt.verify(token, JWT_SECRET, (err, res) => {
+      const user = jwt.verify(token, jwt_token, (err, res) => {
         if (err) {
           return "token expired";
         }
