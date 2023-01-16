@@ -3,12 +3,19 @@ const app = express();
 const mongoose = require("mongoose");
 app.use(express.json());
 const cors = require("cors");
-app.use(cors());
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const serverless = require("serverless-http");
 const router = express.Router();
 var dotenv = require('dotenv');
+const corsOptions = {
+  // origin: "https://managed-backend.netlify.app",
+  origin: "http://localhost:8000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+  exposedHeaders: "**",
+};
+app.use(cors(corsOptions));
 
 dotenv.config();
 
