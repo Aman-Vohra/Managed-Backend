@@ -9,8 +9,8 @@ const serverless = require("serverless-http");
 const router = express.Router();
 var dotenv = require('dotenv');
 const corsOptions = {
-  // origin: "https://managed-backend.netlify.app",
-  origin: "http://localhost:8000",
+  origin: "https://managedio.netlify.app",
+  // origin: "http://localhost:8000",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
   exposedHeaders: "**",
